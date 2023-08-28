@@ -14,7 +14,7 @@ function DressCard() {
                                 <div className="models-div__box__descr">
                                     <div className="models-div__box__descr__name-price">
                                         <div className="models-div__box__descr__name-price__name">
-                                            <p>Audi A1</p>
+                                            <p>Dress</p>
                                             <span>
                                                 <i className="fa-solid fa-star"></i>
                                                 <i className="fa-solid fa-star"></i>
@@ -44,7 +44,7 @@ function DressCard() {
                                     </div>
                                     <div className="models-div__box__descr__name-price__btn">
                                         <Link onClick={() => window.scrollTo(0, 0)} to="/">
-                                            Book Ride
+                                            Book Dress
                                         </Link>
                                     </div>
                                 </div>

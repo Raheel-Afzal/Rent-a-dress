@@ -9,6 +9,7 @@ function BookDress() {
         city: '',
         dressName: '',
         gender: '',
+        color:'',
         size: '',
         price: {
             minPrice: 1000, maxPrice: 1500
@@ -39,7 +40,7 @@ function BookDress() {
                             }}>
                                 <div className="box-form__car-type">
                                     <label>
-                                        <DressTypeIcon size={22}/>
+                                        <DressTypeIcon size={22} />
                                         &nbsp;  Dress
                                         Type <b>*</b>
                                     </label>
@@ -81,6 +82,19 @@ function BookDress() {
                                         <option>Large</option>
                                         <option>Extra Large</option>
 
+                                    </select>
+                                </div>
+
+
+                                <div className="box-form__car-type">
+                                    <label>
+                                    <i class="fas fa-palette"></i> &nbsp; Color<b>*</b>
+                                    </label>
+                                    <select value={filter.size} onChange={(e) => { setFilter(curr => ({ ...curr, size: e.target.value })) }}>
+                                        <option>Yellow</option>
+                                        <option>Green</option>
+                                        <option>Blue</option>
+                                        <option>Red</option>
                                     </select>
                                 </div>
 
