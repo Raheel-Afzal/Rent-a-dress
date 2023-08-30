@@ -1,29 +1,56 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PriceRange from "./PriceRange";
 import DressTypeIcon from "./DressTypeIcon";
+import DressesSection from "./DressesSection";
+import { RepositoryFactory } from "../repository/RepositoryFactory";
+var endPoint = RepositoryFactory.get("endPoint")
 
 function BookDress() {
 
+
+    const [dressTypes, setDressTypes] = useState([])
+    const [dressColors, setDressColors] = useState([])
+    const [dressName, setDressName] = useState([])
+    const [dressSize, setDressSize] = useState([])
+
     const [filter, setFilter] = useState({
-        dressType: '',
-        city: '',
-        dressName: '',
-        gender: '',
-        color:'',
+        type: '',
+        // City: '',
+        name: '',
+        geneder: '',
+        color: '',
         size: '',
         price: {
             minPrice: 1000, maxPrice: 1500
         }
     })
 
-    // const [priceRange, setPriceRange] = useState({
-    //     : 1000,
-    //     maxPrice: 1500
-    // });
+    const [appliedFilter, setAppliedFilter] = useState({})
+    useEffect(() => {
+        const fetchDresses = async () => {
+            const response = await endPoint.getdressDetails()
+            const types = Array.from(new Set(response.data.map((dress) => (
+                dress.type
+            ))))
+            const colors = Array.from(new Set(response.data.map((dress) => (
+                dress.color
+            ))))
+            const names = Array.from(new Set(response.data.map((dress) => (
+                dress.name
+            ))))
+            const sizes = Array.from(new Set(response.data.map((dress) => (
+                dress.size
+            ))))
 
-    // const handlePriceRangeChange = (newPriceRange) => {
-    //     setPriceRange(newPriceRange);
-    // };
+            setDressTypes(types)
+            setDressColors(colors)
+            setDressName(names)
+            setDressSize(sizes)
+        }
+        fetchDresses()
+    }, [])
+
+
 
     return (
         <>
@@ -36,7 +63,9 @@ function BookDress() {
 
                             <form className="box-form" onSubmit={(e) => {
                                 e.preventDefault()
-                                console.log("e", filter)
+
+                                setAppliedFilter(filter)
+                                console.log("e", JSON.stringify(filter))
                             }}>
                                 <div className="box-form__car-type">
                                     <label>
@@ -44,31 +73,41 @@ function BookDress() {
                                         &nbsp;  Dress
                                         Type <b>*</b>
                                     </label>
-                                    <select value={filter.dressType} onChange={(e) => { setFilter(curr => ({ ...curr, dressType: e.target.value })) }}>
+                                    <select value={filter.type} required onChange={(e) => { setFilter(curr => ({ ...curr, type: e.target.value })) }}>
                                         <option value={''}>Select your dress type</option>
-                                        <option value={1}>Kurta</option>
+                                        {
+                                            dressTypes.map((type) => (
+                                                <option value={type}>{type}</option>
+
+                                            ))
+                                        }
                                     </select>
                                 </div>
 
-                                <div className="box-form__car-type">
+                                {/* <div className="box-form__car-type">
                                     <label>
                                         <i className="fa-solid fa-location-dot"></i> &nbsp; City{" "}
                                         <b>*</b>
                                     </label>
-                                    <select value={filter.city} onChange={(e) => { setFilter(curr => ({ ...curr, city: e.target.value })) }}>
+                                    <select value={filter.City} onChange={(e) => { setFilter(curr => ({ ...curr, City: e.target.value })) }}>
                                         <option>Select City</option>
                                         <option>Rawalpindi</option>
                                     </select>
-                                </div>
+                                </div> */}
 
                                 <div className="box-form__car-type">
                                     <label>
                                         <i className="fas fa-tshirt"></i> &nbsp; Select a
                                         Dress <b>*</b>
                                     </label>
-                                    <select value={filter.dressName} onChange={(e) => { setFilter(curr => ({ ...curr, dressName: e.target.value })) }}>
-                                        <option>Select a dress</option>
-                                        <option>Lehnga</option>
+                                    <select value={filter.name} required onChange={(e) => { setFilter(curr => ({ ...curr, name: e.target.value })) }}>
+                                        <option value={''} disabled>Select a dress</option>
+                                        {
+                                            dressName.map((name) => (
+                                                <option value={name}>{name}</option>
+
+                                            ))
+                                        }
                                     </select>
                                 </div>
 
@@ -76,11 +115,14 @@ function BookDress() {
                                     <label>
                                         <i className="fas fa-ruler"></i> &nbsp; Size<b>*</b>
                                     </label>
-                                    <select value={filter.size} onChange={(e) => { setFilter(curr => ({ ...curr, size: e.target.value })) }}>
-                                        <option>Small</option>
-                                        <option>Medium</option>
-                                        <option>Large</option>
-                                        <option>Extra Large</option>
+                                    <select value={filter.size} required onChange={(e) => { setFilter(curr => ({ ...curr, size: e.target.value })) }}>
+                                        <option disabled value={""}>select size</option>
+                                        {
+                                            dressSize.map((size) => (
+                                                <option value={size}>{size}</option>
+
+                                            ))
+                                        }
 
                                     </select>
                                 </div>
@@ -88,13 +130,16 @@ function BookDress() {
 
                                 <div className="box-form__car-type">
                                     <label>
-                                    <i class="fas fa-palette"></i> &nbsp; Color<b>*</b>
+                                        <i className="fas fa-palette"></i> &nbsp; Color<b>*</b>
                                     </label>
-                                    <select value={filter.size} onChange={(e) => { setFilter(curr => ({ ...curr, size: e.target.value })) }}>
-                                        <option>Yellow</option>
-                                        <option>Green</option>
-                                        <option>Blue</option>
-                                        <option>Red</option>
+                                    <select value={filter.color} required onChange={(e) => { setFilter(curr => ({ ...curr, color: e.target.value })) }}>
+                                        <option disabled value={""}>select color</option>
+                                        {
+                                            dressColors.map((color) => (
+                                                <option value={color}>{color}</option>
+
+                                            ))
+                                        }
                                     </select>
                                 </div>
 
@@ -102,9 +147,11 @@ function BookDress() {
                                     <label>
                                         <i className="fas fa-venus-mars"></i> &nbsp; Gender<b>*</b>
                                     </label>
-                                    <select value={filter.gender} onChange={(e) => { setFilter(curr => ({ ...curr, gender: e.target.value })) }}>
-                                        <option>Male</option>
-                                        <option>Female</option>
+                                    <select value={filter.geneder} required onChange={(e) => { setFilter(curr => ({ ...curr, geneder: e.target.value })) }}>
+                                        <option disabled value={""}>select gender</option>
+
+                                        <option value={'Male'}>Male</option>
+                                        <option value={'Female'}>Female</option>
 
                                     </select>
                                 </div>
@@ -121,6 +168,20 @@ function BookDress() {
                                     />
                                 </div>
 
+
+                                {/* <div className="box-form__car-type">
+                                    <label>
+                                        <i className="fas fa-venus-mars"></i> &nbsp; Rent Start Date<b>*</b>
+                                    </label>
+                                    <input type="date" />
+                                </div>
+                                <div className="box-form__car-type">
+                                    <label>
+                                        <i className="fas fa-venus-mars"></i> &nbsp; Rent End Date<b>*</b>
+                                    </label>
+                                    <input type="date" />
+                                </div> */}
+
                                 <button type="submit">
                                     Search
                                 </button>
@@ -129,6 +190,7 @@ function BookDress() {
                     </div>
                 </div>
             </section>
+            <DressesSection filter={appliedFilter} />
         </>
     );
 }

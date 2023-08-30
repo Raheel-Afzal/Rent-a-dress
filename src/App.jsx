@@ -13,14 +13,6 @@ function App() {
                     <Switch>
                         {routes.map((route, index) => {
                             switch (route.layout) {
-                                case "main":
-                                    return (
-                                        <Route key={index} exact path={route.path}>
-                                            <Main>
-                                                <route.component />
-                                            </Main>
-                                        </Route>
-                                    );
                                 case "auth":
                                     return (
                                         <Route key={index} exact path={route.path}>
@@ -29,6 +21,15 @@ function App() {
                                             </Auth>
                                         </Route>
                                     );
+                                case "main":
+                                    return (
+                                        <Route key={index} exact path={route.path}>
+                                            <Main>
+                                                <route.component />
+                                            </Main>
+                                        </Route>
+                                    );
+
                                 default:
                                     <Redirect key={index} to="/" />
                             }

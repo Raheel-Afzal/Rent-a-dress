@@ -28,7 +28,7 @@ const PriceRange = ({ priceRange, onPriceRangeChange }) => {
                     name="minPrice"
                     value={priceRange.minPrice}
                     min="500"
-                    max="2000"
+                    max="5000"
                     step="100"
                     onChange={handlePriceChange}
                 />
@@ -37,7 +37,7 @@ const PriceRange = ({ priceRange, onPriceRangeChange }) => {
                     name="maxPrice"
                     value={priceRange.maxPrice}
                     min="500"
-                    max="2000"
+                    max="5000"
                     step="100"
                     onChange={handlePriceChange}
                 />
@@ -45,11 +45,11 @@ const PriceRange = ({ priceRange, onPriceRangeChange }) => {
             <div className="price-content">
                 <div className="d-flex">
                     <p className="mr-1 ">Min </p>
-                    <span id="min-value">${priceRange.minPrice}</span>
+                    <span id="min-value">{priceRange.minPrice}pkr</span>
                 </div>
                 <div className="d-flex">
                     <p className="mr-1">Max </p>
-                    <span id="max-value">${priceRange.maxPrice}</span>
+                    <span id="max-value">{priceRange.maxPrice}pkr</span>
                 </div>
             </div>
         </div>

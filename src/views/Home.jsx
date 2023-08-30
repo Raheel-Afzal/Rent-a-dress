@@ -1,5 +1,5 @@
 import BookDress from "../components/BookDress";
-import DressCard from "../components/DressCard";
+import DressesSection from "../components/DressesSection";
 import HeroSection from "../components/HeroSection";
 
 function Home() {
@@ -7,7 +7,7 @@ function Home() {
         <>
             <HeroSection />
             <BookDress />
-            <DressCard />
+            
         </>
     );
 }

@@ -1,25 +1,29 @@
-import { LOGIN, LOGOUT, UPDATE_PROFILE } from "../types";
+import { AUTH_SET_LOADING, LOGIN, LOGOUT, UPDATE_PROFILE } from "../types";
 
 const initialState = {
   user: null,
   uid: null,
+  loading: false,
 };
 
-/*
-    Any action related to Profile will go here.
-*/
 
 export default function authUserReducer(
   state = initialState,
   { type, payload }
 ) {
   switch (type) {
+    case AUTH_SET_LOADING:
+      return {
+        ...state,
+        loading: payload
+      };
     case LOGIN:
       return {
         ...state,
         user: payload,
-        uid: payload.id,
+        uid: payload.id
       };
+
     case LOGOUT:
       localStorage.removeItem("auth");
       return {
